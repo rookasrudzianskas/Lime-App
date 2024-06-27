@@ -5,6 +5,7 @@ import Mapbox, {
   ShapeSource,
   SymbolLayer,
   Images,
+  CircleLayer,
 } from '@rnmapbox/maps';
 import { featureCollection, point } from '@turf/helpers';
 
