@@ -22,10 +22,7 @@ export default function Map() {
     <MapView style={{ flex: 1 }} styleURL="mapbox://styles/mapbox/dark-v11">
       <Camera followZoomLevel={10} followUserLocation />
       <LocationPuck puckBearingEnabled puckBearing="heading" pulsing={{ isEnabled: true }} />
-      <ShapeSource
-        id="scooters"
-        shape={featureCollection(points)}
-      >
+      <ShapeSource id="scooters" shape={featureCollection(points)}>
         <CircleLayer
           id="clusters"
           belowLayerID="clusters-count"
