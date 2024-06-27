@@ -22,13 +22,31 @@ export default function Map() {
     <MapView style={{ flex: 1 }} styleURL="mapbox://styles/mapbox/dark-v11">
       <Camera followZoomLevel={10} followUserLocation />
       <LocationPuck puckBearingEnabled puckBearing="heading" pulsing={{ isEnabled: true }} />
-      <ShapeSource id="scooters" shape={featureCollection(points)}>
+      <ShapeSource
+        id="scooters"
+        shape={featureCollection(points)}
+      >
+        <CircleLayer
+          id="clusters"
+          belowLayerID="clusters-count"
+          filter={['has', 'point_count']}
+          style={{
+            circlePitchAlignment: 'map',
+            circleColor: '#42E100',
+            circleRadius: 20,
+            circleOpacity: 1,
+            circleStrokeWidth: 2,
+            circleStrokeColor: 'white',
+          }}
+        />
         <SymbolLayer
           id="scooter-icons"
+          filter={['!', ['has', 'point_count']]}
           style={{
             iconImage: 'pin',
             iconSize: 0.5,
             iconAllowOverlap: true,
+            iconAnchor: 'bottom',
           }}
         />
         <Images images={{ pin }} />
