@@ -3,6 +3,11 @@ import { Text } from 'react-native';
 
 import { Container } from '~/components/Container';
 
+/**
+ * Renders the NotFoundScreen component.
+ *
+ * @return {JSX.Element} The rendered NotFoundScreen component.
+ */
 export default function NotFoundScreen() {
   return (
     <>
