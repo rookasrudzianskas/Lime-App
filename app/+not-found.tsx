@@ -6,7 +6,7 @@ import { Container } from '~/components/Container';
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      <Stack.Screen options={{ title: 'Cool not found!' }} />
       <Container>
         <Text className={styles.title}>This screen doesn't exist.</Text>
         <Link href="/" className={styles.link}>
