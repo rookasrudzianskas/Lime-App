@@ -5,12 +5,33 @@ import getDistance from '@turf/distance';
 import { point } from '@turf/helpers';
 
 import { getDirections } from '~/directions';
+import { supabase } from "~/lib/supabase";
+import { Alert } from "react-native";
 const ScooterContext = createContext({});
 
 export default function ScooterProvider({ children }: PropsWithChildren) {
+  const [nearbyScooters, setNearbyScooters] = useState([]);
   const [selectedScooter, setSelectedScooter] = useState();
   const [direction, setDirection] = useState();
   const [isNearby, setIsNearby] = useState(false);
+
+  useEffect(() => {
+    const fetchScooters = async () => {
+      const location = await Location.getCurrentPositionAsync();
+      const { error, data } = await supabase.rpc('nearby_scooters', {
+        lat: location.coords.latitude,
+        long: location.coords.longitude,
+        max_dist_meters: 2000,
+      });
+      if (error) {
+        Alert.alert('Failed to fetch scooters', error.message);
+      } else {
+        setNearbyScooters(data);
+      }
+    };
+
+    fetchScooters();
+  }, []);
 
   useEffect(() => {
     let subscription: Location.LocationSubscription | undefined;
@@ -56,6 +77,7 @@ export default function ScooterProvider({ children }: PropsWithChildren) {
   return (
     <ScooterContext.Provider
       value={{
+        nearbyScooters,
         selectedScooter,
         setSelectedScooter,
         direction,
