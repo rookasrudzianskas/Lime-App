@@ -120,4 +120,5 @@ export default function RideProvider({ children }: PropsWithChildren) {
   );
 }
 
+
 export const useRide = () => useContext(RideContext);
