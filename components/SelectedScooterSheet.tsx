@@ -7,16 +7,20 @@ import { Text, Image, View } from 'react-native';
 import { Button } from './Button';
 
 import scooterImage from '~/assets/scooter.png';
+import { useRide } from '~/providers/RideProvider';
 import { useScooter } from '~/providers/ScooterProvider';
 
 export default function SelectedScooterSheet() {
-  const { selectedScooter, duration, distance, isNearby } = useScooter();
+  const { selectedScooter, duration, distance, isNearby, setSelectedScooter } = useScooter();
+  const { startRide } = useRide();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   useEffect(() => {
     if (selectedScooter) {
       bottomSheetRef.current?.expand();
+    } else {
+      bottomSheetRef.current?.close();
     }
   }, [selectedScooter]);
 
@@ -26,6 +30,7 @@ export default function SelectedScooterSheet() {
       index={-1}
       snapPoints={[200]}
       enablePanDownToClose
+      onClose={() => setSelectedScooter(undefined)}
       backgroundStyle={{ backgroundColor: '#414442' }}>
       {selectedScooter && (
         <BottomSheetView style={{ flex: 1, padding: 10, gap: 20 }}>
@@ -67,7 +72,14 @@ export default function SelectedScooterSheet() {
           </View>
           {/* Bottom part */}
           <View>
-            <Button title="Start journey" disabled={!isNearby} />
+            <Button
+              title="Start journey"
+              onPress={() => {
+                startRide(selectedScooter.id);
+                setSelectedScooter(undefined);
+              }}
+              disabled={!isNearby}
+            />
           </View>
         </BottomSheetView>
       )}

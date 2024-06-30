@@ -1,12 +1,12 @@
 // @ts-nocheck
-import * as Location from 'expo-location';
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 import getDistance from '@turf/distance';
 import { point } from '@turf/helpers';
+import * as Location from 'expo-location';
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { getDirections } from '~/directions';
-import { supabase } from "~/lib/supabase";
-import { Alert } from "react-native";
+import { supabase } from '~/lib/supabase';
 const ScooterContext = createContext({});
 
 export default function ScooterProvider({ children }: PropsWithChildren) {
@@ -70,6 +70,9 @@ export default function ScooterProvider({ children }: PropsWithChildren) {
 
     if (selectedScooter) {
       fetchDirections();
+      setIsNearby(false);
+    } else {
+      setDirection(undefined);
       setIsNearby(false);
     }
   }, [selectedScooter]);
