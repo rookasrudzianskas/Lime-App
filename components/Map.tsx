@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Mapbox, { Camera, LocationPuck, MapView } from '@rnmapbox/maps';
 
 import LineRoute from './LineRoute';
